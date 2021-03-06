@@ -1,13 +1,15 @@
 import cv2
 import numpy as np
 
-Cap = cv2.VideoCapture(1)
+Cap = cv2.VideoCapture(0)
 
-back = cv2.imread('back.jpg')
+back = cv2.imread('./back.jpg')  # Here Upload The background as You want
 
 
 while Cap.isOpened():
+
     ret, frame = Cap.read()
+
     if ret:
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -16,8 +18,8 @@ while Cap.isOpened():
 
         # Here I'm using the different hsv value as I've Cal by my Wish
 
-        low_val_b = np.array([98, 100, 100])
-        up_val_b = np.array([118, 255, 255])
+        low_val_b = np.array([0,0,0]) # hue+10,100,100
+        up_val_b = np.array([0, 0, 255]) #hue-10,255,255
 
         # Masking value which are blue
         mask = cv2.inRange(img, low_val_b, up_val_b)
@@ -42,7 +44,7 @@ while Cap.isOpened():
 
         cv2.imshow("Cloak", Final)
 
-    if cv2.waitKey(5) == ord('q'):
+    if cv2.waitKey(3) == ord('q'):
         break
 
 Cap.release()
